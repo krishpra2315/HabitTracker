@@ -22,7 +22,7 @@ struct HabitsView: View {
                 viewModel.addHabit()
             })
             Button("edit", action: {
-                viewModel.editHabit()
+                viewModel.logProgress()
             })
         }
         .padding()
