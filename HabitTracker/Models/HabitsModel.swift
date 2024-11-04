@@ -7,16 +7,19 @@
 
 import SwiftUI
 
-struct HabitsModel: Identifiable {
+struct HabitsModel: Identifiable, Equatable {
     let id: UUID = UUID()
     let name: String
     let label: String
     let color: Color
     let goal: Int
-    var progress = 0
+    var progress: Int
     let unit: String
     let rep: Repeat
-    
+
+    static func == (lhs: HabitsModel, rhs: HabitsModel) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 enum Repeat {
