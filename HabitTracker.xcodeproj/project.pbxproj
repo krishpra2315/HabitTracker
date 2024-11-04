@@ -16,6 +16,7 @@
 		35EBAE752CCB03D6009DC3AA /* HabitTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EBAE742CCB03D6009DC3AA /* HabitTrackerTests.swift */; };
 		35EBAE7F2CCB03D6009DC3AA /* HabitTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EBAE7E2CCB03D6009DC3AA /* HabitTrackerUITests.swift */; };
 		35EBAE812CCB03D6009DC3AA /* HabitTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EBAE802CCB03D6009DC3AA /* HabitTrackerUITestsLaunchTests.swift */; };
+		39E615392CD995B40009C832 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E615382CD995B40009C832 /* AddHabitView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		35EBAE7A2CCB03D6009DC3AA /* HabitTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HabitTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35EBAE7E2CCB03D6009DC3AA /* HabitTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerUITests.swift; sourceTree = "<group>"; };
 		35EBAE802CCB03D6009DC3AA /* HabitTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		39E615382CD995B40009C832 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				354DE64D2CD04A5C00B9B416 /* HabitsView.swift */,
+				39E615382CD995B40009C832 /* AddHabitView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				354DE6502CD04AE300B9B416 /* HabitsModel.swift in Sources */,
 				35EBAE642CCB03D5009DC3AA /* HabitTrackerApp.swift in Sources */,
 				354DE6522CD04B8900B9B416 /* HabitsViewModel.swift in Sources */,
+				39E615392CD995B40009C832 /* AddHabitView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
