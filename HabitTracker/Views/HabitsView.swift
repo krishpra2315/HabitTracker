@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HabitsView: View {
     @StateObject var viewModel = HabitsViewModel()
+    @State var showOverlay: Bool = false
     
     var body: some View {
         VStack {
@@ -22,7 +23,7 @@ struct HabitsView: View {
                 viewModel.addHabit()
             })
             Button("edit", action: {
-                viewModel.logProgress()
+                viewModel.logProgress(index: 0, amount: 5)
             })
         }
         .padding()
