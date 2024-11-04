@@ -20,13 +20,22 @@ struct HabitsView: View {
                 }
             })
             Button("add", action: {
-                viewModel.addHabit()
+                showOverlay.toggle()
             })
+            .sheet(isPresented: $showOverlay) {
+                AddHabitView()
+            }
             Button("edit", action: {
                 viewModel.logProgress(index: 0, amount: 5)
             })
         }
         .padding()
+    }
+}
+
+struct AddHabitView: View {
+    var body : some View {
+        Text("Add Habit")
     }
 }
 
