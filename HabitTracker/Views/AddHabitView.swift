@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddHabitView: View {
     var body: some View {
-        Text("ADd Habit view")
+        Text("Add Habit View")
     }
 }
 
