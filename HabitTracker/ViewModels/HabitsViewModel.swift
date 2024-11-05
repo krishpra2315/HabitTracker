@@ -18,10 +18,8 @@ class HabitsViewModel: ObservableObject {
     }
     
     func removeHabit(habit: HabitsModel) {
-        for i in 0...habitsList.count {
-            if habitsList[i] == habit {
-                
-            }
+        if let index = habitsList.firstIndex(of: habit) {
+            habitsList.remove(at: index)
         }
     }
     
