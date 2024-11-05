@@ -33,11 +33,7 @@ struct HabitsView: View {
     }
 }
 
-struct AddHabitView: View {
-    var body : some View {
-        Text("Add Habit")
-    }
-}
+
 
 #Preview {
     HabitsView()
