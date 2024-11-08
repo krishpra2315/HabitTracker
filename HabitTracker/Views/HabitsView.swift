@@ -11,6 +11,7 @@ struct HabitsView: View {
     @StateObject var viewModel = HabitsViewModel()
     @State var showOverlay: Bool = false
     
+    
     var body: some View {
         VStack {
             List(viewModel.habitsList, id: \.id, rowContent: { habit in
@@ -23,7 +24,7 @@ struct HabitsView: View {
                 showOverlay.toggle()
             })
             .sheet(isPresented: $showOverlay) {
-                AddHabitView()
+                AddHabitView(viewModel: viewModel)
             }
             Button("edit", action: {
                 viewModel.logProgress(index: 0, amount: 5)
@@ -33,11 +34,7 @@ struct HabitsView: View {
     }
 }
 
-struct AddHabitView: View {
-    var body : some View {
-        Text("Add Habit")
-    }
-}
+
 
 #Preview {
     HabitsView()
