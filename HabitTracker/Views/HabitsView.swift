@@ -11,13 +11,13 @@ struct HabitsView: View {
     @StateObject var viewModel = HabitsViewModel()
     @State var showOverlay: Bool = false
     
-    
     var body: some View {
         VStack {
             List(viewModel.habitsList, id: \.id, rowContent: { habit in
                 HStack {
                     Text(habit.name)
                     Text("\(habit.progress)")
+                    Text(habit.rep.rawValue)
                 }
             })
             Button("add", action: {
