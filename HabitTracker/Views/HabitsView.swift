@@ -17,13 +17,14 @@ struct HabitsView: View {
                 HStack {
                     Text(habit.name)
                     Text("\(habit.progress)")
+                    Text(habit.rep.rawValue)
                 }
             })
             Button("add", action: {
                 showOverlay.toggle()
             })
             .sheet(isPresented: $showOverlay) {
-                AddHabitView()
+                AddHabitView(viewModel: viewModel)
             }
             Button("edit", action: {
                 viewModel.logProgress(index: 0, amount: 5)

@@ -22,10 +22,17 @@ struct HabitsModel: Identifiable, Equatable {
     }
 }
 
-enum Repeat {
-    case DAILY
-    case WEEKDAYS
-    case WEEKENDS
-    case WEEKLY
-    case CUSTOM
+enum Repeat: String {
+    case DAILY = "Daily"
+    case WEEKDAYS = "Weekdays"
+    case WEEKENDS = "Weekends"
+    case WEEKLY = "Weekly"
+    case CUSTOM = "Custom"
+    case MONDAY = "Every Monday"
+    case TUESDAY = "Every Tuesday"
+    case WEDNESDAY = "Every Wednesday"
+    case THURSDAY = "Every Thursday"
+    case FRIDAY = "Every Friday"
+    case SATURDAY = "Every Saturday"
+    case SUNDAY = "Every Sunday"
 }
