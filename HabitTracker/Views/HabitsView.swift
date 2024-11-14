@@ -29,6 +29,15 @@ struct HabitsView: View {
             Button("edit", action: {
                 viewModel.logProgress(index: 0, amount: 5)
             })
+            Button(action: {
+                print("Button was tapped.")
+            }){
+                Image(systemName: "plus")
+                    .resizable()
+                    .frame(width: 20, height:  20)
+                    .foregroundColor(.blue)
+
+            }
         }
         .padding()
     }
