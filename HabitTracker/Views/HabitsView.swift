@@ -12,25 +12,36 @@ struct HabitsView: View {
     @State var showOverlay: Bool = false
     
     var body: some View {
-        VStack {
-            List(viewModel.habitsList, id: \.id, rowContent: { habit in
-                HStack {
-                    Text(habit.name)
-                    Text("\(habit.progress)")
-                    Text(habit.rep.rawValue)
-                }
-            })
-            Button("add", action: {
-                showOverlay.toggle()
-            })
-            .sheet(isPresented: $showOverlay) {
-                AddHabitView(viewModel: viewModel)
+        NavigationView {
+            VStack {
+                List(viewModel.habitsList, id: \.id, rowContent: { habit in
+                    HStack {
+                        Text(habit.name)
+                        Text("\(habit.progress)")
+                        Text(habit.rep.rawValue)
+                    }
+                })
+                
+                Button("edit", action: {
+                    viewModel.logProgress(index: 0, amount: 5)
+                })
             }
-            Button("edit", action: {
-                viewModel.logProgress(index: 0, amount: 5)
-            })
+            .navigationBarItems(
+                trailing: Button("Add", action: {
+                   
+                })
+                .sheet(isPresented: $showOverlay) {
+                    AddHabitView(viewModel: viewModel)
+                }
+                .foregroundColor(.blue)
+                .bold()
+            )
+            .navigationTitle("Habits")
+            .navigationBarTitleDisplayMode(.automatic)
+            .toolbarColorScheme(.light, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
         }
-        .padding()
+
     }
 }
 
