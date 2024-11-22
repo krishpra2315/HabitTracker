@@ -28,7 +28,7 @@ struct HabitsView: View {
             }
             .navigationBarItems(
                 trailing: Button("Add", action: {
-                   
+                   showOverlay = true
                 })
                 .sheet(isPresented: $showOverlay) {
                     AddHabitView(viewModel: viewModel)
