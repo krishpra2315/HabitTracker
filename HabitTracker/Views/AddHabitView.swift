@@ -35,10 +35,12 @@ struct AddHabitView: View {
             Form {
                 TextField("Name", text: $name)
                     .keyboardType(.default)
+                    .foregroundColor(.black)
                 TextField("Label", text: $label)
                     .keyboardType(.default)
+                    .foregroundColor(.black)
                 
-                Section("COLOR") {
+                Section(header: Text("COLOR").foregroundColor(.gray)) {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 16) {
                         ForEach(colors.indices, id: \.self) { index in
                             ZStack {
@@ -60,17 +62,20 @@ struct AddHabitView: View {
                     }
                 }
                 
-                Section("TARGET") {
+                Section(header: Text("TARGET").foregroundColor(.gray)) {
                     TextField("Goal", text: $goal)
                         .keyboardType(.numberPad)
+                        .foregroundColor(.black)
                     TextField("Unit", text: $unit)
                         .keyboardType(.default)
+                        .foregroundColor(.black)
                 }
                 
-                Section("REPEAT") {
+                Section(header: Text("REPEAT").foregroundColor(.gray)) {
                     ForEach(options, id: \.self) { option in
                         HStack {
                             Text(option.rawValue)
+                                .foregroundColor(.primary)
                             Spacer()
                             if option == selectedOption {
                                 Image(systemName: "checkmark")
@@ -139,10 +144,11 @@ struct CustomRepeatView: View {
     
     var body: some View {
         Form {
-            Section("CUSTOM") {
+            Section(header: Text("CUSTOM").foregroundColor(.gray)) {
                 ForEach(options, id: \.self) { option in
                     HStack {
                         Text(option.rawValue)
+                            .foregroundColor(.black)
                         Spacer()
                         if selectedValues.contains(option) {
                             Image(systemName: "checkmark")

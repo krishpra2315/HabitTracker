@@ -21,12 +21,23 @@ struct HabitsView: View {
             })
             .sheet(isPresented: $showOverlay) {
                 AddHabitView(viewModel: viewModel)
+
             }
-            Button("edit", action: {
-                viewModel.logProgress(index: 0, amount: 5)
-            })
+            .navigationBarItems(
+                trailing: Button("Add", action: {
+                   showOverlay = true
+                })
+                .sheet(isPresented: $showOverlay) {
+                    AddHabitView(viewModel: viewModel)
+                }
+                .foregroundColor(.blue)
+                .bold()
+            )
+            .navigationTitle("Habits")
+            .navigationBarTitleDisplayMode(.automatic)
+            .toolbarColorScheme(.light, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
         }
-        .padding()
     }
 }
 
