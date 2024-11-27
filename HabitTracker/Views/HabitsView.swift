@@ -26,18 +26,13 @@ struct HabitsView: View {
                             .font(.title)
                             .padding()
                     }
+                    .sheet(isPresented: $showOverlay) {
+                        AddHabitView(viewModel: viewModel)
+                    }
                 }
                 Spacer()
                 List($viewModel.habitsList, id: \.id) { $habit in
                     HabitsRow(habit: $habit)
-                }
-                
-                
-                Button("add", action: {
-                    showOverlay.toggle()
-                })
-                .sheet(isPresented: $showOverlay) {
-                    AddHabitView(viewModel: viewModel)
                 }
             })
             
@@ -55,14 +50,16 @@ struct HabitsRow: View {
     @State var showLogHabit: Bool = false
     
     var body: some View {
-        VStack {
-            Text("\(habit.name)")
-            HStack {
-                Text("\(habit.progress)/")
-                    .font(.largeTitle)
-                VStack {
-                    Text("\(habit.goal)")
-                    Text("\(habit.unit)")
+        HStack {
+            VStack {
+                Text("\(habit.name)")
+                HStack {
+                    Text("\(habit.progress) /")
+                        .font(.largeTitle)
+                    VStack {
+                        Text("\(habit.goal)")
+                        Text("\(habit.unit)")
+                    }
                 }
             }
             Spacer()
