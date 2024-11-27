@@ -13,15 +13,14 @@ struct HabitsView: View {
     
     var body: some View {
         VStack {
-            List(viewModel.habitsList, id: \.id) { habit in
-                HabitsRow(habit: habit, viewModel: viewModel)
+            List($viewModel.habitsList, id: \.id) { $habit in
+                HabitsRow(habit: $habit)
             }
             Button("add", action: {
                 showOverlay.toggle()
             })
             .sheet(isPresented: $showOverlay) {
                 AddHabitView(viewModel: viewModel)
-
             }
             .navigationBarItems(
                 trailing: Button("Add", action: {
@@ -43,9 +42,8 @@ struct HabitsView: View {
 
 struct HabitsRow: View {
     
-    var habit: HabitsModel
+    @Binding var habit: HabitsModel
     @State var showLogHabit: Bool = false
-    var viewModel: HabitsViewModel
     
     var body: some View {
         HStack {
@@ -53,13 +51,17 @@ struct HabitsRow: View {
             Text("\(habit.progress)")
             Text("\(habit.goal)")
             Spacer()
-            Button("Log", action: {
-                showLogHabit.toggle()
-            })
+                .swipeActions(edge: .trailing) {
+                    Button("Log", action: {
+                        showLogHabit.toggle()
+                    })
+                    .tint(.blue)
+                }
             .sheet(isPresented: $showLogHabit) {
-                LogHabitView(viewModel: viewModel)
+                LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
             }
         }
+        .padding()
     }
 }
 
