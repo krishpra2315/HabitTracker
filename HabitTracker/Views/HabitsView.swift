@@ -14,6 +14,7 @@ struct HabitsView: View {
     var body: some View {
             VStack(alignment: .leading, content: {
                 HStack {
+                    
                     Text("Habits")
                         .font(.largeTitle)
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -54,6 +55,9 @@ struct HabitsRow: View {
             VStack {
                 Text("\(habit.name)")
                 HStack {
+                    Circle()
+                        .fill(habit.color)
+                        .frame(width: 47, height: 47)
                     Text("\(habit.progress) /")
                         .font(.largeTitle)
                     VStack {

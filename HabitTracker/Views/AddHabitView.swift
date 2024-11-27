@@ -57,6 +57,7 @@ struct AddHabitView: View {
                             }
                             .onTapGesture {
                                 selectedColorIndex = index
+                                color = colors[selectedColorIndex]
                             }
                         }
                     }
