@@ -7,15 +7,25 @@
 
 import SwiftUI
 
-struct HabitsModel: Identifiable, Equatable {
+class HabitsModel: Identifiable, Equatable, ObservableObject {
     let id: UUID = UUID()
-    let name: String
-    let label: String
-    let color: Color
-    let goal: Int
-    var progress: Int
-    let unit: String
-    let rep: Repeat
+    @Published var name: String
+    @Published var label: String
+    @Published var color: Color
+    @Published var goal: Int
+    @Published var progress: Int
+    @Published var unit: String
+    @Published var rep: Repeat
+    
+    init(name: String, label: String, color: Color, goal: Int, progress: Int, unit: String, rep: Repeat) {
+            self.name = name
+            self.label = label
+            self.color = color
+            self.goal = goal
+            self.progress = progress
+            self.unit = unit
+            self.rep = rep
+    }
 
     static func == (lhs: HabitsModel, rhs: HabitsModel) -> Bool {
         return lhs.id == rhs.id

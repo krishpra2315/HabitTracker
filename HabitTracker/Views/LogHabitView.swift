@@ -8,10 +8,20 @@
 import SwiftUI
 
 struct LogHabitView: View {
-    @ObservedObject var viewModel: HabitsViewModel
+    @Binding var habit: HabitsModel
+    @Binding var showLogHabit: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("\(habit.name)")
+            Stepper("\(habit.progress)", value: $habit.progress, in: 1...habit.goal)
+        }
+        .navigationTitle("Log")
+        Button("Save", action: {
+            showLogHabit = false
+        })
     }
+    
 }
 
 
