@@ -13,13 +13,9 @@ struct HabitsView: View {
     
     var body: some View {
         VStack {
-            List(viewModel.habitsList, id: \.id, rowContent: { habit in
-                HStack {
-                    Text(habit.name)
-                    Text("\(habit.progress)")
-                    Text(habit.rep.rawValue)
-                }
-            })
+            List(viewModel.habitsList, id: \.id) { habit in
+                HabitsRow(habit: habit, viewModel: viewModel)
+            }
             Button("add", action: {
                 showOverlay.toggle()
             })
@@ -34,8 +30,31 @@ struct HabitsView: View {
     }
 }
 
+struct HabitsRow: View {
+    
+    var habit: HabitsModel
+    @State var showLogHabit: Bool = false
+    var viewModel: HabitsViewModel
+    
+    var body: some View {
+        HStack {
+            Text("\(habit.name)")
+            Text("\(habit.progress)")
+            Text("\(habit.goal)")
+            Spacer()
+            Button("Log", action: {
+                showLogHabit.toggle()
+            })
+            .sheet(isPresented: $showLogHabit) {
+                LogHabitView(viewModel: viewModel)
+            }
+        }
+    }
+}
+
 
 
 #Preview {
     HabitsView()
 }
+
