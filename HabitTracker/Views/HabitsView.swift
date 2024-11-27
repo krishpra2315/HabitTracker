@@ -12,33 +12,42 @@ struct HabitsView: View {
     @State var showOverlay: Bool = false
     
     var body: some View {
-        VStack {
-            List($viewModel.habitsList, id: \.id) { $habit in
-                HabitsRow(habit: $habit)
-            }
-            Button("add", action: {
-                showOverlay.toggle()
-            })
-            .sheet(isPresented: $showOverlay) {
-                AddHabitView(viewModel: viewModel)
-            }
-            .navigationBarItems(
-                trailing: Button("Add", action: {
-                   showOverlay = true
+            VStack(alignment: .leading, content: {
+                HStack {
+                    Text("Habits")
+                        .font(.largeTitle)
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .padding()
+                    Spacer()
+                    Button(action : {
+                        showOverlay.toggle()
+                    }) {
+                        Image(systemName: "plus")
+                            .font(.title)
+                            .padding()
+                    }
+                }
+                Spacer()
+                List($viewModel.habitsList, id: \.id) { $habit in
+                    HabitsRow(habit: $habit)
+                }
+                
+                
+                Button("add", action: {
+                    showOverlay.toggle()
                 })
                 .sheet(isPresented: $showOverlay) {
                     AddHabitView(viewModel: viewModel)
                 }
-                .foregroundColor(.blue)
-                .bold()
-            )
-            .navigationTitle("Habits")
+            })
+            
             .navigationBarTitleDisplayMode(.automatic)
             .toolbarColorScheme(.light, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
         }
     }
-}
+    
+
 
 struct HabitsRow: View {
     
@@ -46,24 +55,29 @@ struct HabitsRow: View {
     @State var showLogHabit: Bool = false
     
     var body: some View {
-        HStack {
+        VStack {
             Text("\(habit.name)")
-            Text("\(habit.progress)")
-            Text("\(habit.goal)")
-            Spacer()
-                .swipeActions(edge: .trailing) {
-                    Button("Log", action: {
-                        showLogHabit.toggle()
-                    })
-                    .tint(.blue)
+            HStack {
+                Text("\(habit.progress)/")
+                    .font(.largeTitle)
+                VStack {
+                    Text("\(habit.goal)")
+                    Text("\(habit.unit)")
                 }
+            }
+            Spacer()
+            Button("Log", action: {
+                showLogHabit.toggle()
+            })
+        }
+        .padding(25)
             .sheet(isPresented: $showLogHabit) {
                 LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
             }
         }
-        .padding()
+       
     }
-}
+
 
 
 
