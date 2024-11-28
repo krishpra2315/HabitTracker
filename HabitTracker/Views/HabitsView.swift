@@ -12,34 +12,48 @@ struct HabitsView: View {
     @State var showOverlay: Bool = false
     
     var body: some View {
-            VStack(alignment: .leading, content: {
-                HStack {
-                    
-                    Text("Habits")
-                        .font(.largeTitle)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .padding()
-                    Spacer()
-                    Button(action : {
-                        showOverlay.toggle()
-                    }) {
-                        Image(systemName: "plus")
-                            .font(.title)
+
+        TabView {
+            NavigationStack {
+                VStack(alignment: .leading, content: {
+                    HStack {
+                        Text("Habits")
+                            .font(.largeTitle)
+                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                             .padding()
+                        Spacer()
+                        Button(action : {
+                            showOverlay.toggle()
+                        }) {
+                            Image(systemName: "plus")
+                                .font(.title)
+                                .padding()
+                        }
+                        .sheet(isPresented: $showOverlay) {
+                            AddHabitView(viewModel: viewModel)
+                        }
                     }
-                    .sheet(isPresented: $showOverlay) {
-                        AddHabitView(viewModel: viewModel)
+                    Spacer()
+                    List($viewModel.habitsList, id: \.id) { $habit in
+                        HabitsRow(habit: $habit)
                     }
-                }
-                Spacer()
-                List($viewModel.habitsList, id: \.id) { $habit in
-                    HabitsRow(habit: $habit)
-                }
-            })
+                })
+                .navigationBarTitleDisplayMode(.automatic)
+                .toolbarColorScheme(.light, for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
+                    
+            }
+            .tabItem {
+                Label("Habits", systemImage: "house.fill")
+            }
             
-            .navigationBarTitleDisplayMode(.automatic)
-            .toolbarColorScheme(.light, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
+            NavigationStack {
+                Text("Progress")
+            }
+            .tabItem {
+                Label("Progress", systemImage: "calendar")
+            }
+        }
         }
     }
     
