@@ -11,8 +11,9 @@ struct LogHabitView: View {
     @Binding var habit: HabitsModel
     @Binding var showLogHabit: Bool
     
+    
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             Text("\(habit.name)")
             Stepper("\(habit.progress)", value: $habit.progress, in: 1...habit.goal)
         }
