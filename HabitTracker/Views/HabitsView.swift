@@ -30,13 +30,28 @@ struct HabitsView: View {
                                 .padding()
                         }
                         .sheet(isPresented: $showOverlay) {
-                            AddHabitView(viewModel: viewModel)
+                            AddHabitView(viewModel: viewModel)                            
                         }
                     }
                     Spacer()
-                    List($viewModel.habitsList, id: \.id) { $habit in
-                        HabitsRow(habit: $habit)
+//                    List($viewModel.habitsList, id: \.id) { $habit in
+//                        HabitsRow(habit: $habit)
+//                    }
+//                  habits list adder, new grouping method
+                    List {
+                        ForEach(viewModel.groupedHabits.keys.sorted(), id: \.self) { group in
+                            // grab array from the dict, each array contains a group
+                            if let habits = viewModel.groupedHabits[group], !habits.isEmpty {
+                                Section(header: Text(group)) {
+                                    ForEach(habits, id: \.id) { habit in
+                                        // new habitrow
+                                        HabitsRow(habit: .constant(habit))
+                                    }
+                                }
+                            }
+                        }
                     }
+                    
                 })
                 .navigationBarTitleDisplayMode(.automatic)
                 .toolbarColorScheme(.light, for: .navigationBar)

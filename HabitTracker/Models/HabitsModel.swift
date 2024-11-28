@@ -45,4 +45,5 @@ enum Repeat: String {
     case FRIDAY = "Every Friday"
     case SATURDAY = "Every Saturday"
     case SUNDAY = "Every Sunday"
+    
 }
