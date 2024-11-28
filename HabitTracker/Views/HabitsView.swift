@@ -12,6 +12,7 @@ struct HabitsView: View {
     @State var showOverlay: Bool = false
     
     var body: some View {
+
         TabView {
             NavigationStack {
                 VStack(alignment: .leading, content: {
@@ -68,6 +69,12 @@ struct HabitsRow: View {
             VStack {
                 Text("\(habit.name)")
                 HStack {
+                    ZStack{
+                        Circle()
+                            .fill(habit.color)
+                            .frame(width: 47, height: 47)
+                        Text("\(habit.label)")
+                    }
                     Text("\(habit.progress) /")
                         .font(.largeTitle)
                     VStack {
@@ -77,22 +84,31 @@ struct HabitsRow: View {
                 }
             }
             Spacer()
-            Button("Log", action: {
+            Button(action: {
                 showLogHabit.toggle()
-            })
-        }
-        .padding(25)
-            .sheet(isPresented: $showLogHabit) {
-                LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
+            }) {
+                ZStack{
+                    Image(systemName: "capsule.fill")
+                        .resizable()
+                        .frame(width: 60, height: 30)
+                        .foregroundColor(.blue)
+                    
+                    Text("+ Log")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                }
             }
         }
-       
+        .padding(25)
+        .sheet(isPresented: $showLogHabit) { LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
+        }
     }
-
-
-
-
-#Preview {
-    HabitsView()
+    
+    
+    
+    
+    #Preview {
+        HabitsView()
+    }
+    
 }
-
