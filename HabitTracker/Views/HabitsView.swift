@@ -137,12 +137,8 @@ struct HabitsRow: View {
         .sheet(isPresented: $showLogHabit) { LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
         }
     }
-    
-    
-    
-    
-    #Preview {
-        HabitsView()
-    }
-    
+}
+
+#Preview {
+    HabitsView()
 }
