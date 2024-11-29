@@ -14,7 +14,7 @@ struct AddHabitView: View {
     @State var label: String = ""
     @State var goal: String = ""
     @State var unit: String = ""
-    @State var color: Color = Color.red
+    @State var color: Color = .pink.opacity(0.5)
     @State var selectedColorIndex: Int = 0
     @State private var selectedOption: Repeat = Repeat.CUSTOM
     
