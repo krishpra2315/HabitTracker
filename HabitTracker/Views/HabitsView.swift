@@ -16,28 +16,6 @@ struct HabitsView: View {
         TabView {
             NavigationStack {
                 VStack(alignment: .leading, content: {
-                    HStack {
-                        Text("Habits")
-                            .font(.largeTitle)
-                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                            .padding()
-                        Spacer()
-                        Button(action : {
-                            showOverlay.toggle()
-                        }) {
-                            Image(systemName: "plus")
-                                .font(.title)
-                                .padding()
-                        }
-                        .sheet(isPresented: $showOverlay) {
-                            AddHabitView(viewModel: viewModel)                            
-                        }
-                    }
-                    Spacer()
-//                    List($viewModel.habitsList, id: \.id) { $habit in
-//                        HabitsRow(habit: $habit)
-//                    }
-//                  habits list adder, new grouping method
                     List {
                         ForEach(viewModel.groupedHabits.keys.sorted(), id: \.self) { group in
                             // grab array from the dict, each array contains a group
@@ -53,6 +31,19 @@ struct HabitsView: View {
                     }
                     
                 })
+                .navigationBarItems(
+                    trailing: 
+                    Button(action : {
+                        showOverlay.toggle()
+                    }) {
+                        Image(systemName: "plus")
+                            .font(.system(size: 25))
+                            .foregroundColor(.blue)
+                    }
+                    .sheet(isPresented: $showOverlay) {
+                        AddHabitView(viewModel: viewModel)
+                })
+                .navigationTitle("Habits")
                 .navigationBarTitleDisplayMode(.automatic)
                 .toolbarColorScheme(.light, for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
@@ -90,28 +81,30 @@ struct HabitsRow: View {
                     .offset(x: -22)
                 
                 Text("\(habit.label)")
-                    .font(.system(size: 15))
                     .offset(x: -22)
             }
             .padding(.leading, 3)
 
-            ZStack {
-                
-                Text("0")
-                    .font(.system(size: 40))
+            HStack(spacing: -25) {
+                Text("\(habit.progress)")
+                    .font(.system(size: 40, design: .monospaced))
                     .offset(x: -21, y: 16)
+                    .padding(.trailing, 4)
 
-                Text(" /")
-                    .font(.system(size: 34))
-                    .offset(x: -5, y: 14)
-
-                Text("\(habit.goal)")
-                    .font(.system(size: 14))
-                    .offset(x: 15, y: 10)
-
-                Text("\(habit.unit)")
-                    .font(.system(size: 14))
-                    .offset(x: 18, y: 26)
+                Text("/")
+                    .font(.system(size: 34, design: .monospaced))
+                    .offset(x: 0, y: 16)
+                VStack(alignment: .leading) {
+                    Text("\(habit.goal)")
+                        .font(.system(size: 13, design: .monospaced))
+                        .bold()
+                    
+                    Text("\(habit.unit)")
+                        .font(.system(size: 13, design: .monospaced))
+                        .bold()
+                }
+                .offset(x: 23, y: 16)
+                .padding(.leading, 4)
             }
 
             Text("\(habit.name)")
@@ -121,21 +114,26 @@ struct HabitsRow: View {
             Button(action: {
                 showLogHabit.toggle()
             }) {
-                ZStack{
-                    Image(systemName: "capsule.fill")
-                        .resizable()
-                        .frame(width: 70, height: 30)
-                        .foregroundColor(.blue)
-                    
-                    Text("+ Log")
-                        .font(.headline)
+                HStack {
+                    Image(systemName: "plus")
+                        .foregroundColor(.white)
+                    Text("Log")
+                        .font(.system(size: 15))
                         .foregroundColor(.white)
                 }
+                .frame(width: 65, height: 25)
+                .padding(4)
             }
+            .background(.blue)
+            .cornerRadius(40)
+            .sheet(isPresented: $showLogHabit) { 
+                LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
+            }
+            
         }
         .padding()
-        .sheet(isPresented: $showLogHabit) { LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
-        }
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+        
     }
 }
 
