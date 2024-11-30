@@ -16,19 +16,24 @@ struct HabitsView: View {
             NavigationStack {
                 VStack(alignment: .leading, content: {
                     CalendarSlider()
-                    List {
-                        ForEach(viewModel.groupedHabits.keys.sorted(), id: \.self) { group in
-                            // grab array from the dict, each array contains a group
-                            if let habits = viewModel.groupedHabits[group], !habits.isEmpty {
-                                Section(header: Text(group)) {
-                                    ForEach(habits, id: \.id) { habit in
-                                        // new habitrow
-                                        HabitsRow(habit: .constant(habit))
-                                    }
+                    Divider()
+                    ForEach(viewModel.groupedHabits.keys.sorted(), id: \.self) { group in
+                        
+                        if let habits = viewModel.groupedHabits[group], !habits.isEmpty {
+                            Section(
+                                header:
+                                    Text(group.uppercased())
+                                    .padding(.leading, 13)
+                                    .font(.system(size: 14))
+                            ) {
+                                ForEach(habits, id: \.id) { habit in
+                                    HabitsRow(habit: .constant(habit))
+                                    Divider()
                                 }
                             }
                         }
                     }
+                    Spacer()
                     
                 })
                 .navigationBarItems(
@@ -78,26 +83,26 @@ struct HabitsRow: View {
                 Circle()
                     .fill(habit.color)
                     .frame(width: 47, height: 47)
-                    .offset(x: -22)
+                    .offset(x: -10)
                 
                 Text("\(habit.label)")
-                    .offset(x: -22)
+                    .offset(x: -10)
             }
             .padding(.leading, 3)
             
-            VStack(spacing: -10) {
+            VStack(alignment: .leading, spacing: -10) {
                 Text("\(habit.name)")
                     .font(.system(size: 15))
                 
                 HStack(spacing: -25) {
                     Text("\(habit.progress)")
                         .font(.system(size: 40, design: .monospaced))
-                        .offset(x: -21, y: 16)
+                        .offset(x: -14, y: 16)
                         .padding(.trailing, 4)
                     
                     Text("/")
                         .font(.system(size: 34, design: .monospaced))
-                        .offset(x: 0, y: 16)
+                        .offset(x: 7, y: 16)
                     VStack(alignment: .leading) {
                         Text("\(habit.goal)")
                             .font(.system(size: 13, design: .monospaced))
@@ -107,9 +112,10 @@ struct HabitsRow: View {
                             .font(.system(size: 13, design: .monospaced))
                             .bold()
                     }
-                    .offset(x: 23, y: 16)
+                    .offset(x: 29, y: 16)
                     .padding(.leading, 4)
                 }
+                .padding(.leading, 10)
             }
 
             
@@ -152,7 +158,6 @@ struct CalendarSlider: View {
                 HStack(spacing: 10) {
                     ForEach(daysOfWeek, id: \.self) { day in
                         Button(action: {
-                            // Handle the action when a date is selected
                         }) {
                             VStack {
                                 Text(day)
