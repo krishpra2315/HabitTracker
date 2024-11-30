@@ -12,10 +12,10 @@ struct HabitsView: View {
     @State var showOverlay: Bool = false
     
     var body: some View {
-
         TabView {
             NavigationStack {
                 VStack(alignment: .leading, content: {
+                    CalendarSlider()
                     List {
                         ForEach(viewModel.groupedHabits.keys.sorted(), id: \.self) { group in
                             // grab array from the dict, each array contains a group
@@ -84,32 +84,35 @@ struct HabitsRow: View {
                     .offset(x: -22)
             }
             .padding(.leading, 3)
-
-            HStack(spacing: -25) {
-                Text("\(habit.progress)")
-                    .font(.system(size: 40, design: .monospaced))
-                    .offset(x: -21, y: 16)
-                    .padding(.trailing, 4)
-
-                Text("/")
-                    .font(.system(size: 34, design: .monospaced))
-                    .offset(x: 0, y: 16)
-                VStack(alignment: .leading) {
-                    Text("\(habit.goal)")
-                        .font(.system(size: 13, design: .monospaced))
-                        .bold()
+            
+            VStack(spacing: -10) {
+                Text("\(habit.name)")
+                    .font(.system(size: 15))
+                
+                HStack(spacing: -25) {
+                    Text("\(habit.progress)")
+                        .font(.system(size: 40, design: .monospaced))
+                        .offset(x: -21, y: 16)
+                        .padding(.trailing, 4)
                     
-                    Text("\(habit.unit)")
-                        .font(.system(size: 13, design: .monospaced))
-                        .bold()
+                    Text("/")
+                        .font(.system(size: 34, design: .monospaced))
+                        .offset(x: 0, y: 16)
+                    VStack(alignment: .leading) {
+                        Text("\(habit.goal)")
+                            .font(.system(size: 13, design: .monospaced))
+                            .bold()
+                        
+                        Text("\(habit.unit)")
+                            .font(.system(size: 13, design: .monospaced))
+                            .bold()
+                    }
+                    .offset(x: 23, y: 16)
+                    .padding(.leading, 4)
                 }
-                .offset(x: 23, y: 16)
-                .padding(.leading, 4)
             }
 
-            Text("\(habit.name)")
-                .font(.system(size: 15))
-                .offset(x: -50, y: -20)
+            
             Spacer()
             Button(action: {
                 showLogHabit.toggle()
@@ -126,7 +129,7 @@ struct HabitsRow: View {
             }
             .background(.blue)
             .cornerRadius(40)
-            .sheet(isPresented: $showLogHabit) { 
+            .sheet(isPresented: $showLogHabit) {
                 LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
             }
             
@@ -134,6 +137,44 @@ struct HabitsRow: View {
         .padding()
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
         
+    }
+}
+
+struct CalendarSlider: View {
+    let daysOfWeek = ["S", "M", "Tu", "W", "Th", "F", "Su"]
+    let datesOfWeek = ["S": "1", "M": "2", "Tu": "3", "W": "4", "Th": "5", "F": "6", "Su": "7"]
+    @State private var selectedDate: String = "Tu" // Example of selected date
+    
+    var body: some View {
+        VStack {
+            // Calendar slider
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(daysOfWeek, id: \.self) { day in
+                        Button(action: {
+                            // Handle the action when a date is selected
+                        }) {
+                            VStack {
+                                Text(day)
+                                    .foregroundColor(self.selectedDate == day ? .red : .gray)
+                                    .font(.system(size: 10))
+                                
+                                Text(datesOfWeek[day]!)
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 20, design: .monospaced))
+                                    .bold()
+                                    .frame(width: 30, height: 30)
+                                    .cornerRadius(30)
+                                    .background(self.selectedDate == day ? Color.gray.opacity(0.2) : Color.clear)
+                            }
+                            .frame(width: 40, height: 40)
+                            .padding(5)
+                        }
+                    }
+                }
+            }
+            .frame(height: 70)
+        }
     }
 }
 

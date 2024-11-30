@@ -17,42 +17,46 @@ struct LogHabitView: View {
         NavigationView {
             VStack(alignment: .center) {
                 Text("\(habit.name)")
-                HStack {
-                    Button(action: {
-                        progressIncrease = max(-habit.progress, progressIncrease - 1)
-                    }) {
-                        Text("-")
+                VStack {
+                    HStack {
+                        Button(action: {
+                            progressIncrease = max(-habit.progress, progressIncrease - 1)
+                        }) {
+                            Text("-")
+                                .font(.title)
+                                .frame(width: 44, height: 44)
+                                .foregroundColor(.white)
+                                .background(Circle().fill(habit.color))
+                        }
+                        
+                        Text("\(habit.progress + progressIncrease)")
                             .font(.title)
-                            .frame(width: 44, height: 44)
-                            .foregroundColor(.white)
-                            .background(Circle().fill(habit.color))
+                        
+                        // Custom Plus Button
+                        Button(action: {
+                            progressIncrease = min(habit.goal - habit.progress, progressIncrease + 1)
+                        }) {
+                            Text("+")
+                                .font(.title)
+                                .frame(width: 44, height: 44)
+                                .foregroundColor(.white)
+                                .background(Circle().fill(habit.color))
+                        }
                     }
-
-                    Text("\(habit.progress + progressIncrease)")
-                        .font(.title)
-
-                    // Custom Plus Button
-                    Button(action: {
-                        progressIncrease = min(habit.goal - habit.progress, progressIncrease + 1)
-                    }) {
-                        Text("+")
-                            .font(.title)
-                            .frame(width: 44, height: 44)
-                            .foregroundColor(.white)
-                            .background(Circle().fill(habit.color))
-                    }
+                    Text("/\(habit.goal) \(habit.unit)")
                 }
             }
             .navigationBarItems(
                 leading: 
                 Button("Cancel", action: {
-                    habit.progress += progressIncrease
+                    progressIncrease = 0
                     showLogHabit = false
                 })
                 .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/),
                 trailing:
                 Button("Save", action: {
                     habit.progress += progressIncrease
+                    progressIncrease = 0
                     showLogHabit = false
                 })
                 .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
