@@ -5,13 +5,13 @@
 //  Created by Krish Prasad on 10/28/24.
 //
 
-import Foundation
 import SwiftUI
 
 
 class HabitsViewModel: ObservableObject {
     @Published var habitsList = [HabitsModel]()
-    @Published var completedGoals = [HabitsModel]()
+    @Published var completedGoals = ["DAILY": 0, "WEEKDAYS": 0, "WEEKENDS": 0, "WEEKLY": 0, "CUSTOM": 0]
+    
     var groupedHabits: [String: [HabitsModel]] {
         Dictionary(grouping: habitsList) { $0.rep.rawValue }
     }
@@ -23,14 +23,10 @@ class HabitsViewModel: ObservableObject {
     
     func removeHabit(habit: HabitsModel) {
         if let index = habitsList.firstIndex(of: habit) {
+            if (habit.progress == habit.goal) {
+                completedGoals["\(habit.rep.rawValue.uppercased())"]! -= 1
+            }
             habitsList.remove(at: index)
-        }
-    }
-    
-    func logProgress(index: Int, amount: Int) {
-        habitsList[index].progress += amount
-        if (habitsList[index].progress >= habitsList[index].goal) {
-            completedGoals.append(habitsList[index])
         }
     }
 }

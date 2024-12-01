@@ -14,27 +14,37 @@ struct HabitsView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                VStack(alignment: .leading, content: {
+                VStack(alignment: .leading, spacing: -10, content: {
                     CalendarSlider()
+                        .padding(.bottom)
                     Divider()
-                    ForEach(viewModel.groupedHabits.keys.sorted(), id: \.self) { group in
-                        
-                        if let habits = viewModel.groupedHabits[group], !habits.isEmpty {
-                            Section(
-                                header:
-                                    Text(group.uppercased())
-                                    .padding(.leading, 13)
-                                    .font(.system(size: 14))
-                            ) {
-                                ForEach(habits, id: \.id) { habit in
-                                    HabitsRow(habit: .constant(habit))
-                                    Divider()
+                    List {
+                        ForEach(viewModel.groupedHabits.keys.sorted(), id: \.self) { group in
+                            if let habits = viewModel.groupedHabits[group], !habits.isEmpty {
+                                Section(
+                                    header:
+                                        Text(group.uppercased())
+                                        .padding(.leading, 13)
+                                        .font(.system(size: 14))
+                                ) {
+                                    ForEach(habits, id: \.id) { habit in
+                                        HabitsRow(habit: .constant(habit), viewModel: viewModel)
+                                            .swipeActions {
+                                                Button(role: .destructive) {
+                                                    viewModel.removeHabit(habit: habit)
+                                                } label: {
+                                                    Label("Delete", systemImage: "trash")
+                                                }
+                                            }
+                                            .listRowInsets(EdgeInsets())
+                                    }
                                 }
+                                .listSectionSeparator(.hidden)
                             }
                         }
                     }
+                    .listStyle(.plain)
                     Spacer()
-                    
                 })
                 .navigationBarItems(
                     trailing: 
@@ -58,9 +68,7 @@ struct HabitsView: View {
                 Label("Habits", systemImage: "house.fill")
             }
             
-            NavigationStack {
-                Text("Progress")
-            }
+            ProgressView(viewModel: viewModel)
             .tabItem {
                 Label("Progress", systemImage: "calendar")
             }
@@ -74,6 +82,7 @@ struct HabitsRow: View {
     
     @Binding var habit: HabitsModel
     @State var showLogHabit: Bool = false
+    @StateObject var viewModel: HabitsViewModel
     
     var body: some View {
 //        HStack {
@@ -108,7 +117,7 @@ struct HabitsRow: View {
                             .font(.system(size: 13, design: .monospaced))
                             .bold()
                         
-                        Text("\(habit.unit)")
+                        Text("\(habit.unit.uppercased())")
                             .font(.system(size: 13, design: .monospaced))
                             .bold()
                     }
@@ -120,23 +129,41 @@ struct HabitsRow: View {
 
             
             Spacer()
-            Button(action: {
-                showLogHabit.toggle()
-            }) {
-                HStack {
-                    Image(systemName: "plus")
-                        .foregroundColor(.white)
-                    Text("Log")
-                        .font(.system(size: 15))
-                        .foregroundColor(.white)
+            if(habit.progress == habit.goal) {
+                Button(action: {
+                }) {
+                    HStack {
+                        Text("Completed!")
+                            .font(.system(size: 15))
+                            .foregroundColor(.white)
+                    }
+                    .frame(width: 100, height: 40)
+                    .padding(4)
                 }
-                .frame(width: 65, height: 25)
-                .padding(4)
-            }
-            .background(.blue)
-            .cornerRadius(40)
-            .sheet(isPresented: $showLogHabit) {
-                LogHabitView(habit: $habit, showLogHabit: $showLogHabit)
+                .background(.green)
+                .cornerRadius(40)
+                .sheet(isPresented: $showLogHabit) {
+                    LogHabitView(habit: $habit, showLogHabit: $showLogHabit, viewModel: viewModel)
+                }
+            } else {
+                Button(action: {
+                    showLogHabit.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: "plus")
+                            .foregroundColor(.white)
+                        Text("Log")
+                            .font(.system(size: 15))
+                            .foregroundColor(.white)
+                    }
+                    .frame(width: 65, height: 25)
+                    .padding(4)
+                }
+                .background(.blue)
+                .cornerRadius(40)
+                .sheet(isPresented: $showLogHabit) {
+                    LogHabitView(habit: $habit, showLogHabit: $showLogHabit, viewModel: viewModel)
+                }
             }
             
         }
