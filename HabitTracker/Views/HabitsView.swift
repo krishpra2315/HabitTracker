@@ -129,7 +129,7 @@ struct HabitsRow: View {
 
             
             Spacer()
-            if(habit.progress == habit.goal) {
+            if(habit.progress >= habit.goal) {
                 Button(action: {
                 }) {
                     HStack {

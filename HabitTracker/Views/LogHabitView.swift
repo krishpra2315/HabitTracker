@@ -78,7 +78,7 @@ struct LogHabitView: View {
                 trailing:
                 Button("Save", action: {
                     habit.progress += progressIncrease
-                    if (habit.progress == habit.goal) {
+                    if (habit.progress >= habit.goal) {
                         viewModel.completedGoals["\(habit.rep.rawValue.uppercased())"]! += 1
                     }
                     progressIncrease = 0
