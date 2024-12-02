@@ -23,7 +23,7 @@ struct LogHabitView: View {
                     .multilineTextAlignment(.center)
                                 
                 HStack(spacing: 30) {
-                    // Minus Button
+                    
                     Button(action: {
                         progressIncrease = max(-habit.progress, progressIncrease - 1)
                     }) {
@@ -34,7 +34,6 @@ struct LogHabitView: View {
                             .background(Circle().fill(habit.color))
                     }
 
-                    // Input Field for Progress
                     TextField("0", value: $progressIncrease, formatter: NumberFormatter())
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.center)
@@ -44,7 +43,6 @@ struct LogHabitView: View {
                         .background(Color(UIColor.systemGray6))
                         .cornerRadius(12)
 
-                    // Plus Button
                     Button(action: {
                         progressIncrease = min(habit.goal - habit.progress, progressIncrease + 1)
                     }) {
@@ -56,7 +54,7 @@ struct LogHabitView: View {
                     }
                 }
                 
-                Text("\(habit.progress) / \(habit.goal) \(habit.unit)")
+                Text("/ \(habit.goal) \(habit.unit)")
                     .font(.headline)
                     .foregroundColor(.gray)
                 
