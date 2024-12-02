@@ -3,7 +3,7 @@
 //  HabitTracker
 //
 //  Created by Krish Prasad on 10/28/24.
-//
+// WIDGET
 
 import SwiftUI
 
@@ -85,8 +85,6 @@ struct HabitsRow: View {
     @StateObject var viewModel: HabitsViewModel
     
     var body: some View {
-//        HStack {
-//        VStack {
         HStack(spacing: 8) {
             ZStack {
                 Circle()
@@ -176,11 +174,16 @@ struct HabitsRow: View {
 struct CalendarSlider: View {
     let daysOfWeek = ["S", "M", "Tu", "W", "Th", "F", "Su"]
     let datesOfWeek = ["S": "1", "M": "2", "Tu": "3", "W": "4", "Th": "5", "F": "6", "Su": "7"]
-    @State private var selectedDate: String = "Tu" // Example of selected date
+    @State private var selectedDate: String = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E"
+        let currentDay = formatter.string(from: Date())
+        return ["Mon": "M", "Tue": "Tu", "Wed": "W", "Thu": "Th", "Fri": "F", "Sat": "S", "Sun": "Su"][currentDay] ?? "M"
+    }()
+
     
     var body: some View {
         VStack {
-            // Calendar slider
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(daysOfWeek, id: \.self) { day in
