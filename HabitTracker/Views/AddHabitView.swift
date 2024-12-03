@@ -29,6 +29,8 @@ struct AddHabitView: View {
         Repeat.WEEKENDS,
         Repeat.WEEKLY
     ]
+     
+    @State var emptyFieldAlert: Bool = false
     
     var body : some View {
         NavigationView {
@@ -108,16 +110,24 @@ struct AddHabitView: View {
                 ,
                 trailing: Button("Add", action: {
                    
-                    viewModel.addHabit(name: name, label: label, color: color, goal: Int(goal)!, unit: unit, rep: selectedOption)
-                    
-                    name = ""
-                    label = ""
-                    goal = ""
-                    unit = ""
-                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                        windowScene.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
+                    if (Int(goal) != nil) {
+                        viewModel.addHabit(name: name, label: label, color: color, goal: Int(goal)!, unit: unit, rep: selectedOption)
+                        name = ""
+                        label = ""
+                        goal = ""
+                        unit = ""
+                        
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                            windowScene.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
+                        }
+                    } else {
+                        emptyFieldAlert.toggle()
                     }
+                    
                 })
+                .alert("Please enter all fields with a valid input.", isPresented: $emptyFieldAlert) {
+                            Button("OK", role: .cancel) { }
+                        }
                 .foregroundColor(.blue)
                 .bold()
             )
