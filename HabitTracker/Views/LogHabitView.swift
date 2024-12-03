@@ -54,7 +54,7 @@ struct LogHabitView: View {
                     }
                 }
                 
-                Text("/ \(habit.goal) \(habit.unit)")
+                Text("\(habit.progress) / \(habit.goal) \(habit.unit)")
                     .font(.headline)
                     .foregroundColor(.gray)
                 
